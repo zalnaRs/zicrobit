@@ -1,10 +1,18 @@
-
 namespace Bluetooth {
     let options = { brightness: 100 };
-    let data = { steps: steps, temp: input.temperature(), options };
+    let data = { steps: steps, lightLevel: lightLevel, temp: input.temperature(), options };
+
+    const syncSteps = () => {
+        if (data.steps > steps) {
+            steps = data.steps;
+        } else {
+            data.steps = steps;
+        }
+    }
 
     const syncBluetooth = () => {
-        bluetooth.uartWriteString(`,${JSON.stringify(data)},`)
+        syncSteps();
+        bluetooth.uartWriteString(`${JSON.stringify(data)}`)
     }
 
     export const init = () => {
@@ -12,7 +20,8 @@ namespace Bluetooth {
         bluetooth.onUartDataReceived(serial.delimiters(Delimiters.Comma), () => {
             const _data = bluetooth.uartReadUntil(serial.delimiters(Delimiters.Comma));
             //data = JSON.parse(_data);
-
+            
+            serial.writeLine(_data);
             if (_data == "1") {
                 syncBluetooth()
             }

@@ -9,8 +9,20 @@ UI.registerApp('steps', 'S',
     input.onGesture(Gesture.Shake, () => {
         steps += 1
     })
-})
+});
+//const syncSteps = (_steps: number) => steps = _steps; 
 // #endregion
+
+// #region lightlevel
+let lightLevel = 0;
+UI.registerApp('lightlevel', 'L',
+    () => {
+        lightLevel = input.lightLevel();
+        basic.showNumber(lightLevel);
+        UI.exit();
+    });
+// #endregion
+
 
 // #region reset
 UI.registerApp('reset', 'R',
