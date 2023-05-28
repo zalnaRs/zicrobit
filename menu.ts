@@ -23,9 +23,26 @@ namespace UI {
         });
     }
 
-    export const registerApp = (id: string, label: string, render?: () => void, background?: () => void) => {
-        apps.push({id,label,render,background});
-    }
+    export const registerApp = 
+        (
+            id: string, 
+            label: string,
+            render?: () => void,
+            background?: () => void,
+            closeOnPig?: boolean
+        ) => {
+            apps.push({
+                id,
+                label,
+                render,
+                background: () => {
+                    if (closeOnPig) {
+                        if (input.logoIsPressed()) UI.exit(); 
+                    } 
+                    background();
+                }
+            });
+        }
 
     let selectedApp = 0;
     const menu = () => {

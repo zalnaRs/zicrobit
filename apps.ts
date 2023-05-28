@@ -13,6 +13,16 @@ UI.registerApp('steps', 'S',
 //const syncSteps = (_steps: number) => steps = _steps; 
 // #endregion
 
+// #region soundLevel
+let soundLevel = 0;
+UI.registerApp('lightlevel', 'L',
+    () => {
+        soundLevel = input.soundLevel();
+        basic.showNumber(soundLevel);
+        
+    });
+// #endregion
+
 // #region lightlevel
 let lightLevel = 0;
 UI.registerApp('lightlevel', 'L',
